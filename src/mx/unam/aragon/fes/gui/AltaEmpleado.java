@@ -2,7 +2,7 @@ package mx.unam.aragon.fes.gui;
 
 import mx.unam.aragon.fes.Direccion;
 import mx.unam.aragon.fes.Empleado;
-import mx.unam.aragon.fes.ListaEmpleado;
+import mx.unam.aragon.fes.persistencia.ListaEmpleado;
 import mx.unam.aragon.fes.estilo.Estilo;
 import mx.unam.aragon.fes.estilo.StringUI;
 
@@ -114,7 +114,6 @@ public class AltaEmpleado implements ActionListener {
 
         enviarUsuario = new JButton();
         enviarUsuario.addActionListener(this);
-        enviarUsuario.setEnabled(false);
         estilo.buttonEstilo(enviarUsuario, new int[]{160, 490, 130, 40}, StringUI.ENVIAR_BUTTON);
 
         anteriorUsuario = new JButton();
@@ -136,8 +135,8 @@ public class AltaEmpleado implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == guardarButton){
-            if(verificarCamposNoVacios())
+        if(actionEvent.getSource() == enviarUsuario){
+            if(verificarCamposNoVacios()){
                 if(verificarCamposSonCorrectos()){
 
                     Empleado empleado = new Empleado();
@@ -156,20 +155,22 @@ public class AltaEmpleado implements ActionListener {
                     empleado.setHorasExtra(Integer.parseInt(horasExtraTextField.getText()));
 
                     int confirmacion = JOptionPane.showConfirmDialog(null, StringUI.CONFIRMAR_LABEL);
-                    System.out.println(confirmacion);
 
-                    if(confirmacion == 0){
+                    if(confirmacion == JOptionPane.OK_OPTION){
                         ListaEmpleado.getListaDeEmpleado().add(empleado);
                         ListaEmpleado.escribirArchivo();
+                        vaciarCampos();
+                        JOptionPane.showMessageDialog(null, StringUI.DATOS_GUARDADOS + ListaEmpleado.getListaDeEmpleado().size());
                     }
-
-                    vaciarCampos();
+                    else
+                        JOptionPane.showMessageDialog(null, StringUI.DATOS_NO_GUARDADOS);
                 }
+            }
         }
         else if(actionEvent.getSource() == nuevoUsuario)
             vaciarCampos();
         else if(actionEvent.getSource() == cargarButton){
-            Empleado empleado = ListaEmpleado.getListaDeEmpleado().get(1);
+            Empleado empleado = ListaEmpleado.getListaDeEmpleado().get(3);
 
             nombreTextField.setText(empleado.getNombre());
             paternoTextField.setText(empleado.getApellidoPaterno());
@@ -193,8 +194,8 @@ public class AltaEmpleado implements ActionListener {
             JOptionPane.showMessageDialog(null, StringUI.ANTERIOR_BUTTON);
         else if(actionEvent.getSource() == siguienteUsuario)
             JOptionPane.showMessageDialog(null, StringUI.SIGUIENTE_BUTTON);
-        else if(actionEvent.getSource() == enviarUsuario)
-            JOptionPane.showMessageDialog(null, StringUI.ENVIAR_BUTTON);
+        else if(actionEvent.getSource() == guardarButton)
+            JOptionPane.showMessageDialog(null, StringUI.GUARDAR_BUTTON);
     }
 
     private boolean verificarCamposNoVacios(){
@@ -243,7 +244,6 @@ public class AltaEmpleado implements ActionListener {
         catch(Exception error){
             JOptionPane.showMessageDialog(null, StringUI.EDAD_ES_NUMERO);
             System.out.println(error.getMessage());
-            error.printStackTrace();
             return false;
         }
 
@@ -253,7 +253,6 @@ public class AltaEmpleado implements ActionListener {
         catch(Exception error){
             JOptionPane.showMessageDialog(null, StringUI.NUMERO_ES_NUMERO);
             System.out.println(error.getMessage());
-            error.printStackTrace();
             return false;
         }
 
@@ -261,8 +260,8 @@ public class AltaEmpleado implements ActionListener {
             numeroEmpleado = Integer.parseInt(numeroEmpleadoTextField.getText());
         }
         catch (Exception error){
-            System.out.println("Error: " + error.getMessage());
-            error.printStackTrace();
+            JOptionPane.showMessageDialog(null, StringUI.NUMERO_EMPLEADO_RANGO_CORRECTO);
+            System.out.println(error.getMessage());
             return false;
         }
 
@@ -270,8 +269,8 @@ public class AltaEmpleado implements ActionListener {
             horasExtra = Integer.parseInt(horasExtraTextField.getText());
         }
         catch (Exception error){
-            System.out.println("Error: " + error.getMessage());
-            error.printStackTrace();
+            JOptionPane.showMessageDialog(null, StringUI.HORAS_EXTRA_RANGO_CORRECTO);
+            System.out.println(error.getMessage());
             return false;
         }
 
@@ -279,8 +278,8 @@ public class AltaEmpleado implements ActionListener {
             sueldo = Double.parseDouble(sueldoTextField.getText());
         }
         catch (Exception error){
-            System.out.println("Error: " + error.getMessage());
-            error.printStackTrace();
+            JOptionPane.showMessageDialog(null, StringUI.SUELDO_RANGO_CORRECTO);
+            System.out.println(error.getMessage());
             return false;
         }
 

@@ -53,4 +53,6 @@ public class StringUI {
     public static final String HORAS_EXTRA_RANGO_CORRECTO = "No se puede trabajar horas negativas";
 
     public static final String CONFIRMAR_LABEL = "¿Deseas guardar los datos?";
+    public static final String DATOS_GUARDADOS = "Los datos se han guardado. Total de usuarios: ";
+    public static final String DATOS_NO_GUARDADOS = "Los datos no se han guardado.";
 }

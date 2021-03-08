@@ -1,7 +1,8 @@
-package mx.unam.aragon.fes;
+package mx.unam.aragon.fes.persistencia;
 
 import java.io.*;
 import java.util.ArrayList;
+import mx.unam.aragon.fes.Empleado;
 
 public class ListaEmpleado {
     private static final ArrayList<Empleado> listaDeEmpleado = new ArrayList<>();
@@ -16,13 +17,13 @@ public class ListaEmpleado {
                     listaDeEmpleado.add(empleado);
                 }
                 catch (EOFException eofException){
+                    System.out.println(eofException.getMessage());
                     eof = true;
                 }
             }
         }
         catch (IOException | ClassNotFoundException exception){
             System.out.println("Error: " + exception.getMessage());
-            exception.printStackTrace();
         }
     }
 
