@@ -138,30 +138,10 @@ public class AltaEmpleado implements ActionListener {
         if(actionEvent.getSource() == enviarUsuario){
             if(verificarCamposNoVacios()){
                 if(verificarCamposSonCorrectos()){
-
-                    Empleado empleado = new Empleado();
-
-                    empleado.setNombre(nombreTextField.getText());
-                    empleado.setApellidoPaterno(paternoTextField.getText());
-                    empleado.setApellidoMaterno(maternoTextField.getText());
-                    empleado.setEdad(Integer.parseInt(edadTextField.getText()));
-                    empleado.setCurp(curpTextField.getText());
-
-                    empleado.setDireccion(new Direccion(calleTextField.getText(), numeroTextField.getText(), coloniaTextField.getText(), delegacionTextField.getText(), estadoTextField.getText(), cpTextField.getText()));
-
-                    empleado.setNumeroEmpleado(Integer.parseInt(numeroEmpleadoTextField.getText()));
-                    empleado.setDepartamento(departamentoTextField.getText());
-                    empleado.setSueldo(Double.parseDouble(sueldoTextField.getText()));
-                    empleado.setHorasExtra(Integer.parseInt(horasExtraTextField.getText()));
-
+                    Empleado empleado = getDatosUI();
                     int confirmacion = JOptionPane.showConfirmDialog(null, StringUI.CONFIRMAR_LABEL);
-
-                    if(confirmacion == JOptionPane.OK_OPTION){
-                        ListaEmpleado.getListaDeEmpleado().add(empleado);
-                        ListaEmpleado.escribirArchivo();
-                        vaciarCampos();
-                        JOptionPane.showMessageDialog(null, StringUI.DATOS_GUARDADOS + ListaEmpleado.getListaDeEmpleado().size());
-                    }
+                    if(confirmacion == JOptionPane.OK_OPTION)
+                        guardarUsuario(empleado);
                     else
                         JOptionPane.showMessageDialog(null, StringUI.DATOS_NO_GUARDADOS);
                 }
@@ -169,33 +149,14 @@ public class AltaEmpleado implements ActionListener {
         }
         else if(actionEvent.getSource() == nuevoUsuario)
             vaciarCampos();
-        else if(actionEvent.getSource() == cargarButton){
-            Empleado empleado = ListaEmpleado.getListaDeEmpleado().get(3);
-
-            nombreTextField.setText(empleado.getNombre());
-            paternoTextField.setText(empleado.getApellidoPaterno());
-            maternoTextField.setText(empleado.getApellidoMaterno());
-            edadTextField.setText(String.valueOf(empleado.getEdad()));
-            curpTextField.setText(empleado.getCurp());
-
-            calleTextField.setText(empleado.getDireccion().getCalle());
-            numeroTextField.setText(empleado.getDireccion().getNumero());
-            coloniaTextField.setText(empleado.getDireccion().getColonia());
-            delegacionTextField.setText(empleado.getDireccion().getDelegacion());
-            estadoTextField.setText(empleado.getDireccion().getEstado());
-            cpTextField.setText(empleado.getDireccion().getCp());
-
-            numeroEmpleadoTextField.setText(String.valueOf(empleado.getNumeroEmpleado()));
-            departamentoTextField.setText(empleado.getDepartamento());
-            sueldoTextField.setText(String.valueOf(empleado.getSueldo()));
-            horasExtraTextField.setText(String.valueOf(empleado.getHorasExtra()));
-        }
+        else if(actionEvent.getSource() == cargarButton)
+            setDatosUI(ListaEmpleado.getListaDeEmpleado().get(5));
         else if(actionEvent.getSource() == anteriorUsuario)
             JOptionPane.showMessageDialog(null, StringUI.ANTERIOR_BUTTON);
         else if(actionEvent.getSource() == siguienteUsuario)
             JOptionPane.showMessageDialog(null, StringUI.SIGUIENTE_BUTTON);
         else if(actionEvent.getSource() == guardarButton)
-            JOptionPane.showMessageDialog(null, StringUI.GUARDAR_BUTTON);
+            generarArchivoDatosRutaPersonalizada();
     }
 
     private boolean verificarCamposNoVacios(){
@@ -302,7 +263,7 @@ public class AltaEmpleado implements ActionListener {
         return false;
     }
 
-    public void vaciarCampos(){
+    private void vaciarCampos(){
         nombreTextField.setText("");
         paternoTextField.setText("");
         maternoTextField.setText("");
@@ -320,5 +281,57 @@ public class AltaEmpleado implements ActionListener {
         departamentoTextField.setText("");
         sueldoTextField.setText("");
         horasExtraTextField.setText("");
+    }
+    
+    private Empleado getDatosUI(){
+        Empleado empleado = new Empleado();
+
+        empleado.setNombre(nombreTextField.getText());
+        empleado.setApellidoPaterno(paternoTextField.getText());
+        empleado.setApellidoMaterno(maternoTextField.getText());
+        empleado.setEdad(Integer.parseInt(edadTextField.getText()));
+        empleado.setCurp(curpTextField.getText());
+
+        empleado.setDireccion(new Direccion(calleTextField.getText(), numeroTextField.getText(), coloniaTextField.getText(), delegacionTextField.getText(), estadoTextField.getText(), cpTextField.getText()));
+
+        empleado.setNumeroEmpleado(Integer.parseInt(numeroEmpleadoTextField.getText()));
+        empleado.setDepartamento(departamentoTextField.getText());
+        empleado.setSueldo(Double.parseDouble(sueldoTextField.getText()));
+        empleado.setHorasExtra(Integer.parseInt(horasExtraTextField.getText()));
+        
+        return empleado;
+    }
+    
+    private void setDatosUI(Empleado empleado){
+        nombreTextField.setText(empleado.getNombre());
+            paternoTextField.setText(empleado.getApellidoPaterno());
+            maternoTextField.setText(empleado.getApellidoMaterno());
+            edadTextField.setText(String.valueOf(empleado.getEdad()));
+            curpTextField.setText(empleado.getCurp());
+
+            calleTextField.setText(empleado.getDireccion().getCalle());
+            numeroTextField.setText(empleado.getDireccion().getNumero());
+            coloniaTextField.setText(empleado.getDireccion().getColonia());
+            delegacionTextField.setText(empleado.getDireccion().getDelegacion());
+            estadoTextField.setText(empleado.getDireccion().getEstado());
+            cpTextField.setText(empleado.getDireccion().getCp());
+
+            numeroEmpleadoTextField.setText(String.valueOf(empleado.getNumeroEmpleado()));
+            departamentoTextField.setText(empleado.getDepartamento());
+            sueldoTextField.setText(String.valueOf(empleado.getSueldo()));
+            horasExtraTextField.setText(String.valueOf(empleado.getHorasExtra()));
+    }
+    
+    private void guardarUsuario(Empleado empleado){
+        ListaEmpleado.getListaDeEmpleado().add(empleado);
+        ListaEmpleado.escribirArchivo();
+        vaciarCampos();
+        JOptionPane.showMessageDialog(null, StringUI.DATOS_GUARDADOS + ListaEmpleado.getListaDeEmpleado().size());
+    }
+    
+    private void generarArchivoDatosRutaPersonalizada(){
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.showSaveDialog(null);
+        ListaEmpleado.escribirArchivo(jFileChooser.getSelectedFile().getAbsolutePath());
     }
 }
