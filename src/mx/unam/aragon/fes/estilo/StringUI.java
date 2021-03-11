@@ -55,4 +55,6 @@ public class StringUI {
     public static final String CONFIRMAR_LABEL = "¿Deseas guardar los datos?";
     public static final String DATOS_GUARDADOS = "Los datos se han guardado. Total de usuarios: ";
     public static final String DATOS_NO_GUARDADOS = "Los datos no se han guardado.";
+    public static final String POSICION_USUARIO_BUSCADO = "¿Qué posición desea buscar?";
+    public static final String POSICION_NO_VALIDA = "El empleado con la posicion ignresada no existe.";
 }

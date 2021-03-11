@@ -16,7 +16,8 @@ public class AltaEmpleado implements ActionListener {
     private JTextField calleTextField, numeroTextField, coloniaTextField, delegacionTextField, estadoTextField, cpTextField;
     private JTextField numeroEmpleadoTextField, departamentoTextField, sueldoTextField, horasExtraTextField;
     private JButton guardarButton, cargarButton, siguienteUsuario, anteriorUsuario, nuevoUsuario, enviarUsuario;
-
+    private int posicionActual = 0;
+    
     public AltaEmpleado(){
         JFrame jFrame = new JFrame();
         estilo.frameEstilo(jFrame, StringUI.TITULO_VENTANA, WindowConstants.EXIT_ON_CLOSE, new int[]{1, 2, 690, 580});
@@ -149,12 +150,21 @@ public class AltaEmpleado implements ActionListener {
         }
         else if(actionEvent.getSource() == nuevoUsuario)
             vaciarCampos();
-        else if(actionEvent.getSource() == cargarButton)
-            setDatosUI(ListaEmpleado.getListaDeEmpleado().get(5));
-        else if(actionEvent.getSource() == anteriorUsuario)
-            JOptionPane.showMessageDialog(null, StringUI.ANTERIOR_BUTTON);
-        else if(actionEvent.getSource() == siguienteUsuario)
-            JOptionPane.showMessageDialog(null, StringUI.SIGUIENTE_BUTTON);
+        else if(actionEvent.getSource() == cargarButton){
+            posicionActual = Integer.parseInt(JOptionPane.showInputDialog(null, StringUI.POSICION_USUARIO_BUSCADO));
+            if(verificarPosicionIngresada())
+                setDatosUI(ListaEmpleado.getListaDeEmpleado().get(posicionActual));
+            else
+                JOptionPane.showMessageDialog(null, StringUI.POSICION_NO_VALIDA);
+        }
+        else if(actionEvent.getSource() == anteriorUsuario){
+            disminuirPosicion();
+            setDatosUI(ListaEmpleado.getListaDeEmpleado().get(posicionActual));
+        }
+        else if(actionEvent.getSource() == siguienteUsuario){
+            aumentarPosicion();
+            setDatosUI(ListaEmpleado.getListaDeEmpleado().get(posicionActual));
+        }
         else if(actionEvent.getSource() == guardarButton)
             generarArchivoDatosRutaPersonalizada();
     }
@@ -333,5 +343,23 @@ public class AltaEmpleado implements ActionListener {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.showSaveDialog(null);
         ListaEmpleado.escribirArchivo(jFileChooser.getSelectedFile().getAbsolutePath());
+    }
+    
+    private void aumentarPosicion(){
+        if(posicionActual == (ListaEmpleado.getListaDeEmpleado().size()) - 1)
+            posicionActual = 0;
+        else
+            posicionActual += 1;
+    }
+    
+    private void disminuirPosicion(){
+        if(posicionActual == 0)
+            posicionActual = (ListaEmpleado.getListaDeEmpleado().size() - 1);
+        else
+            posicionActual -= 1;
+    }
+    
+    private boolean verificarPosicionIngresada(){
+        return !(posicionActual < 0 || (posicionActual > ListaEmpleado.getListaDeEmpleado().size() - 1));
     }
 }
