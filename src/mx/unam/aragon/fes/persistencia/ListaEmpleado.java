@@ -25,7 +25,7 @@ public class ListaEmpleado {
             archivoEmpleado.close();
         }
         catch (IOException | ClassNotFoundException exception){
-            System.out.println("Error: " + exception.getMessage());
+            System.out.println("Error, ioException static block: " + exception.getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ public class ListaEmpleado {
             archivoEmpleado.close();
         }
         catch (IOException ioException){
-            System.out.println("Error: " + ioException.getMessage());
+            System.out.println("Error, escrbir archivo sin argumentos: " + ioException.getMessage());
         }
     }
     
@@ -49,7 +49,7 @@ public class ListaEmpleado {
             archivoEmpleado.close();
         }
         catch (IOException ioException){
-            System.out.println("Error: " + ioException.getMessage());
+            System.out.println("Error, escrbir archivo con argumentos: " + ioException.getMessage());
         }
     }
 

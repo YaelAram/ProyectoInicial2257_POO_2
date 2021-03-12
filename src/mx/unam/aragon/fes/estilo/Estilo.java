@@ -28,12 +28,6 @@ public class Estilo implements FocusListener, MouseListener {
         this.jFrame = jFrame;
     }
 
-    //Styling Method JPanel
-    public void panelEstilo(JPanel jPanel){
-        jPanel.setLayout(null);
-        jPanel.setBackground(this.greyLight);
-    }
-
     //Styling Method JLabel
     public void labelEstilo(JLabel jLabel, int[] bound, String text){
         jLabel.setBounds(bound[0], bound[1], bound[2], bound[3]);
@@ -96,8 +90,7 @@ public class Estilo implements FocusListener, MouseListener {
             activoTextFieldEstilo((JTextField) focusEvent.getSource());
         }
         catch (Exception error){
-            System.out.println(error.getMessage());
-            error.printStackTrace();
+            System.out.println("Error, focusGained: " + error.getMessage());
         }
     }
 
@@ -107,8 +100,7 @@ public class Estilo implements FocusListener, MouseListener {
             inactivoTextFieldEstilo((JTextField) focusEvent.getSource());
         }
         catch (Exception error){
-            System.out.println(error.getMessage());
-            error.printStackTrace();
+            System.out.println("Error, focusLost: " + error.getMessage());
         }
     }
 
@@ -134,8 +126,7 @@ public class Estilo implements FocusListener, MouseListener {
             activoButtonEstilo((JButton) mouseEvent.getSource());
         }
         catch (Exception error){
-            System.out.println(error.getMessage());
-            error.printStackTrace();
+            System.out.println("Error, mouseEntered: " + error.getMessage());
         }
     }
 
@@ -145,8 +136,7 @@ public class Estilo implements FocusListener, MouseListener {
             inactivoButtonEstilo((JButton) mouseEvent.getSource());
         }
         catch (Exception error){
-            System.out.println(error.getMessage());
-            error.printStackTrace();
+            System.out.println("Error, mouseExited: " + error.getMessage());
         }
     }
 }

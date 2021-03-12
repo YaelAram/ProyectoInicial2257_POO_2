@@ -214,7 +214,7 @@ public class AltaEmpleado implements ActionListener {
         }
         catch(Exception error){
             JOptionPane.showMessageDialog(null, StringUI.EDAD_ES_NUMERO);
-            System.out.println(error.getMessage());
+            System.out.println("Error, cast edad: " + error.getMessage());
             return false;
         }
 
@@ -223,7 +223,7 @@ public class AltaEmpleado implements ActionListener {
         }
         catch(Exception error){
             JOptionPane.showMessageDialog(null, StringUI.NUMERO_ES_NUMERO);
-            System.out.println(error.getMessage());
+            System.out.println("Error, numero cast: " + error.getMessage());
             return false;
         }
 
@@ -232,7 +232,7 @@ public class AltaEmpleado implements ActionListener {
         }
         catch (Exception error){
             JOptionPane.showMessageDialog(null, StringUI.NUMERO_EMPLEADO_RANGO_CORRECTO);
-            System.out.println(error.getMessage());
+            System.out.println("Error, numeroEmpleado: " + error.getMessage());
             return false;
         }
 
@@ -241,7 +241,7 @@ public class AltaEmpleado implements ActionListener {
         }
         catch (Exception error){
             JOptionPane.showMessageDialog(null, StringUI.HORAS_EXTRA_RANGO_CORRECTO);
-            System.out.println(error.getMessage());
+            System.out.println("Error, cast horasExtra: " + error.getMessage());
             return false;
         }
 
@@ -250,7 +250,7 @@ public class AltaEmpleado implements ActionListener {
         }
         catch (Exception error){
             JOptionPane.showMessageDialog(null, StringUI.SUELDO_RANGO_CORRECTO);
-            System.out.println(error.getMessage());
+            System.out.println("Error, cast sueldo: " + error.getMessage());
             return false;
         }
 
